@@ -18,9 +18,14 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      # If you wish to fail your job when the Quality Gate is red, uncomment the
-      # following lines. This would typically be used to fail a deployment.
-      # - uses: sonarsource/sonarqube-quality-gate-action@master
-      #   timeout-minutes: 5
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Pull the Docker image On AWS EC2 For Testing
+        run: docker pull sevenajay/tic-tac-toe:latest
+
+      - name: Stop and remove existing container
+        run: |
+            docker stop react-aws-eks-github-actions || true
+            docker rm react-aws-eks-github-actions || true
+  
+      - name: Run the container on AWS EC2 for testing
+        run: docker run -d --name react-aws-eks-github-actions -p 3000:3000 lokeshd24/react-aws-eks-github-actions:latest
