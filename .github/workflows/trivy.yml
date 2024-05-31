@@ -15,10 +15,9 @@ jobs:
         - name: Checkout Repository
           uses: actions/checkout@v2
 
-        - name: Pull the Docker image From DockerHub
-          run: docker pull codewithmuh/react-aws-eks-github-actions:latest
+        - name: Pull the Docker image
+          run: docker pull lokeshd24/react-aws-eks-github-actions:latest
 
   
         - name: Trivy image scan
-          run: trivy image codewithmuh/react-aws-eks-github-actions:latest
-  
+          run: trivy image lokeshd24/react-aws-eks-github-actions:latest
